@@ -1,0 +1,11 @@
+#!/usr/bin/execlineb -S0
+
+background
+{
+    # Not needed? fdclose 3
+    /etc/s6/init-2 $@
+}
+unexport !
+
+# Not needed? redirfd -r 0 /dev/null
+s6-svscan -t0 /etc/services

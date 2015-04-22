@@ -1,0 +1,21 @@
+#!/usr/bin/execlineb -S0
+
+cd /
+
+# TODO: difference between foreground and if in scripts?
+
+foreground { s6-echo "[s6] Cleanup: syncing disks." }
+foreground { s6-sync }
+
+foreground { s6-echo "[s6] Cleanup: sending TERM to all." }
+foreground { s6-nuke -th }
+foreground { s6-sleep -m 3000 }
+
+foreground { s6-echo "[s6] Cleanup: sending KILL to all and exiting." }
+# TODO? Why aren't these in foreground blocks?
+fdclose 1 fdclose 2
+s6-sleep -m 200
+
+foreground { s6-nuke -k }
+wait { }
+s6-sync

@@ -1,0 +1,6 @@
+#!/usr/bin/execlineb -P
+
+fdmove -c 2 1
+foreground { s6-echo "[s6] s6-svscan panicked!" }
+# TODO if I just want to fail loud and die, should I `exit $?`?
+/bin/sh -i
